@@ -1,0 +1,18 @@
+logging:
+    level:
+        ROOT: WARN
+        backup: DEBUG
+        threewks: DEBUG
+        org.springframework.contrib.gae: DEBUG
+        org.springframework: INFO
+        org.springframework.boot.StartupInfoLogger: DEBUG
+        org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod: TRACE
+
+spring:
+    contrib:
+        gae:
+            datastore:
+                backup:
+                    bucket: ${com.google.appengine.application.id}-backup
+                    queue: backup-queue
+
