@@ -17,7 +17,7 @@ public class Controller {
 	@GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String index() {
 		LOGGER.info("Backup service");
-		return "backup-service - performs Google Cloud Datastore and Google Cloud Storage backups";
+		return "backup-service - performs Google Cloud Datastore backups";
 	}
 
 }
