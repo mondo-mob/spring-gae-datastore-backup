@@ -25,3 +25,46 @@ Note that the cron and task must both be configured with `target: backup-service
 
 You cannot add `cron.xml` or `queue.xml` to this service, it must be added to your default service (ie: your main application).
 
+
+Backup and Import to BigQuery
+=======
+
+As well as regular backups you can configure automatic export and import into BigQuery.
+This is a full import/export and any existing data in BigQuery will be deleted for the requested kinds.
+
+### Endpoint
+
+Task endpoint: `/task/bigquery/datastore-export-and-load`
+
+Params:
+
+| Property        | Description           | Required  |
+| -------------   |-------------          | -----------|
+| name            | name for the datastore export | N |
+| dataset         | the target dataset for the import in BigQuery | Y |
+| kinds           | the datastore kinds to be exported | Y |
+| namespaceId     | optional namespace id to filter by. Only a single namespace is supported. | N |
+
+### Usage
+
+In your default service schedule a cron to trigger an ETL job with target of `backup-service`.
+
+e.g. for XML config
+
+```
+<cron>
+    <url>/task/bigquery/datastore-export-and-load?name=ExportToBigQuery&dataset=backup_data&kinds=Kind1,Kind2,Kind3</url>
+    <description>Datastore export and load to BigQuery</description>
+    <target>backup-service</target>
+    <schedule>every day 03:00</schedule>
+    <timezone>Australia/NSW</timezone>
+</cron>
+```
+or yaml
+```
+- description: "Datastore export and load to BigQuery"
+  url: /task/bigquery/datastore-export-and-load?name=ExportToBigQuery&dataset=backup_data&kinds=Kind1,Kind2,Kind3
+  target: backup-service
+  schedule: every day 03:00
+  timezone: Australia/NSW
+```
